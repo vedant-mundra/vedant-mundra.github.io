@@ -1,39 +1,47 @@
 /* =========================================================
-   Personal profile: stylesheet
-   Edit the colours and fonts in :root to restyle the page.
+   Personal profile: stylesheet (fully responsive)
+   Put this file next to index.html (same folder).
+   Breakpoints: desktop > 900px | tablet <= 900px | phone <= 600px | small phone <= 380px
    ========================================================= */
 
 :root {
-  --ink:        #15303a;   /* deep teal: sidebar, headings */
-  --ink-soft:   #3f5963;   /* body text */
-  --paper:      #eef2f4;   /* page background */
-  --card:       #ffffff;   /* section panels */
-  --line:       #d3dde1;   /* borders */
-  --accent:     #e8a33d;   /* marigold: highlights */
-  --accent-ink: #8a5a0a;   /* accent text on light backgrounds */
+  --ink:        #15303a;
+  --ink-soft:   #3f5963;
+  --paper:      #eef2f4;
+  --card:       #ffffff;
+  --line:       #d3dde1;
+  --accent:     #e8a33d;
+  --accent-ink: #8a5a0a;
 
   --font-head: "Fraunces", Georgia, "Times New Roman", serif;
   --font-body: "Work Sans", "Segoe UI", Roboto, Arial, sans-serif;
 
-  --sidebar-w: 320px;
+  --sidebar-w: clamp(260px, 26vw, 340px);   /* scales with screen width */
   --radius: 10px;
+  --gutter: clamp(1rem, 4vw, 3rem);          /* page side spacing */
 }
 
 /* ---------- Reset & base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;            /* stop phones resizing text */
+}
 
 body {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 1.0625rem;
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);   /* fluid text size */
   line-height: 1.7;
   color: var(--ink-soft);
   background: var(--paper);
+  overflow-x: hidden;                         /* never scroll sideways */
+  overflow-wrap: break-word;                  /* long words/emails wrap */
 }
 
-img { max-width: 100%; display: block; }
+img { max-width: 100%; height: auto; display: block; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 h1, h2, h3, p { margin: 0; }
 
@@ -73,14 +81,15 @@ a:hover { color: var(--ink); }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2.5rem 2rem;
+  padding: 2.5rem 1.75rem;
   text-align: center;
 }
 
 .photo {
-  width: 170px;
-  height: 170px;
+  width: clamp(130px, 12vw, 175px);
+  height: clamp(130px, 12vw, 175px);
   object-fit: cover;
+  object-position: center top;               /* keeps faces in frame */
   border-radius: 50%;
   border: 4px solid var(--accent);
   padding: 5px;
@@ -90,7 +99,7 @@ a:hover { color: var(--ink); }
 .sidebar h1 {
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: 2rem;
+  font-size: clamp(1.6rem, 1.3rem + 0.8vw, 2rem);
   line-height: 1.2;
   color: #fff;
   margin-top: 1.5rem;
@@ -108,7 +117,7 @@ a:hover { color: var(--ink); }
 .nav li { border-bottom: 1px solid rgba(255, 255, 255, 0.15); }
 .nav a {
   display: block;
-  padding: 0.7rem 0.5rem;
+  padding: 0.75rem 0.5rem;
   color: #dce8ec;
   text-decoration: none;
   font-weight: 500;
@@ -125,8 +134,8 @@ a:hover { color: var(--ink); }
 /* ---------- Main content ---------- */
 .content {
   margin-left: var(--sidebar-w);
-  padding: 3rem 3rem 2rem;
-  max-width: calc(var(--sidebar-w) + 52rem);
+  padding: clamp(1.5rem, 4vw, 3rem) var(--gutter) 2rem;
+  max-width: calc(var(--sidebar-w) + 56rem);
 }
 
 .block {
@@ -134,14 +143,14 @@ a:hover { color: var(--ink); }
   border: 1px solid var(--line);
   border-left: 5px solid var(--accent);
   border-radius: var(--radius);
-  padding: 2rem 2.25rem;
-  margin-bottom: 2rem;
+  padding: clamp(1.25rem, 3vw, 2rem) clamp(1.1rem, 3.5vw, 2.25rem);
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
 }
 
 h2 {
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: 1.75rem;
+  font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.75rem);
   line-height: 1.25;
   color: var(--ink);
   margin-bottom: 1.25rem;
@@ -150,7 +159,8 @@ h2 {
 h3 {
   font-family: var(--font-head);
   font-weight: 500;
-  font-size: 1.2rem;
+  font-size: clamp(1.1rem, 1.05rem + 0.2vw, 1.2rem);
+  line-height: 1.35;
   color: var(--ink);
 }
 
@@ -158,7 +168,7 @@ h3 {
 
 .lead {
   font-family: var(--font-head);
-  font-size: 1.3rem;
+  font-size: clamp(1.15rem, 1.05rem + 0.5vw, 1.3rem);
   line-height: 1.5;
   color: var(--ink);
   margin-bottom: 1rem;
@@ -200,6 +210,7 @@ h3 {
 .skill-head {
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
   font-weight: 500;
   color: var(--ink);
   margin-bottom: 0.35rem;
@@ -234,7 +245,7 @@ h3 {
 /* ---------- Interests ---------- */
 .interests {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
   gap: 1rem;
 }
 .interests li {
@@ -260,21 +271,20 @@ h3 {
   padding: 0.8rem 0;
   border-bottom: 1px solid var(--line);
 }
-.contact .label {
-  width: 6rem;
-  font-weight: 600;
-  color: var(--ink);
-}
-.contact a { overflow-wrap: anywhere; }
+.contact .label { width: 6rem; font-weight: 600; color: var(--ink); }
+.contact a { overflow-wrap: anywhere; padding: 0.15rem 0; }
 
 /* ---------- Footer ---------- */
-.footer {
-  text-align: center;
-  font-size: 0.9rem;
-  padding: 1rem 0 0.5rem;
+.footer { text-align: center; font-size: 0.9rem; padding: 1rem 0 0.5rem; }
+
+/* ---------- Very large screens: keep content centred and readable ---------- */
+@media (min-width: 1600px) {
+  .content { margin-left: calc(var(--sidebar-w) + (100vw - var(--sidebar-w) - 56rem) / 2); }
 }
 
-/* ---------- Tablet and mobile ---------- */
+/* =========================================================
+   TABLET AND BELOW: sidebar becomes a top header
+   ========================================================= */
 @media (max-width: 900px) {
   html { scroll-padding-top: 4rem; }
 
@@ -283,10 +293,12 @@ h3 {
     width: 100%;
     overflow: visible;
   }
-  .sidebar-inner { padding: 2rem 1.25rem 0; }
+  .sidebar-inner {
+    min-height: 0;
+    padding: 2rem max(1.25rem, env(safe-area-inset-right)) 0 max(1.25rem, env(safe-area-inset-left));
+  }
   .photo { width: 140px; height: 140px; }
-  .sidebar h1 { font-size: 1.75rem; }
-  .tagline { max-width: 32rem; }
+  .tagline { max-width: 34rem; }
 
   /* nav becomes a sticky horizontal bar */
   .nav {
@@ -297,7 +309,10 @@ h3 {
     width: auto;
     background: var(--ink);
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
+  .nav::-webkit-scrollbar { display: none; }
   .nav ul {
     display: flex;
     justify-content: center;
@@ -306,21 +321,53 @@ h3 {
   }
   .nav li { border: 0; flex: 0 0 auto; }
   .nav a {
-    padding: 0.85rem 1rem;
+    padding: 0.9rem 1.1rem;                    /* 44px+ tap target */
     border-left: 0;
     border-bottom: 3px solid transparent;
+    white-space: nowrap;
   }
   .nav a:hover,
   .nav a:focus-visible { border-bottom-color: var(--accent); }
 
-  .content { margin-left: 0; padding: 1.5rem 1rem 1.5rem; max-width: none; }
-  .block { padding: 1.5rem 1.25rem; }
-  h2 { font-size: 1.5rem; }
+  .content {
+    margin-left: 0;
+    max-width: 44rem;                          /* comfortable line length on tablets */
+    margin-inline: auto;
+    padding: 1.5rem max(1rem, env(safe-area-inset-right)) 1.5rem max(1rem, env(safe-area-inset-left));
+  }
 }
 
-@media (max-width: 480px) {
-  .nav ul { justify-content: flex-start; }
+/* =========================================================
+   PHONES
+   ========================================================= */
+@media (max-width: 600px) {
+  .sidebar-inner { padding-top: 1.5rem; }
+  .photo { width: 120px; height: 120px; }
+  .nav { margin-top: 1.25rem; }
+  .nav ul { justify-content: flex-start; }    /* scroll from the left */
+  .nav a { padding: 0.9rem 0.9rem; }
+
+  .block { border-left-width: 4px; }
+  .timeline li { padding-left: 1.4rem; }
+  .interests { grid-template-columns: 1fr; }
   .contact .label { width: 100%; }
+}
+
+/* =========================================================
+   SMALL PHONES (e.g. 320px wide)
+   ========================================================= */
+@media (max-width: 380px) {
+  .content { padding-left: 0.75rem; padding-right: 0.75rem; }
+  .block { padding: 1.1rem 0.9rem; }
+  .chips li { font-size: 0.9rem; padding: 0.25rem 0.8rem; }
+}
+
+/* ---------- Short landscape screens (phones turned sideways) ---------- */
+@media (max-height: 500px) and (orientation: landscape) and (min-width: 901px) {
+  .sidebar-inner { justify-content: flex-start; padding-block: 1.25rem; }
+  .photo { width: 90px; height: 90px; }
+  .nav { margin-top: 1rem; }
+  .nav a { padding-block: 0.4rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -328,10 +375,9 @@ h3 {
   * { transition: none !important; }
 }
 
-/* ---------- Print ---------- */
 @media print {
   .sidebar { position: static; width: 100%; color: #000; background: none; }
   .nav { display: none; }
-  .content { margin: 0; }
+  .content { margin: 0; max-width: none; }
   .block { break-inside: avoid; }
 }
